@@ -4,8 +4,8 @@
   "description": "Solo Bitcoin Mining Dashboard and Control Panel",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#f7931a",
+  "background_color": "#e0e0e0",
+  "theme_color": "#e0e0e0",
   "orientation": "portrait",
   "start_url": "https://codepec.github.io/dashboard_CKstats_solo/",
   "icons": [
