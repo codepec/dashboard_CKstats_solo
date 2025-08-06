@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SoloMiner Control Panel</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="SoloMiner">
+  <link rel="apple-touch-icon" href="ios/apple-touch-icon.png">
+  <meta name="theme-color" content="#0f172a">
+
+</head>
+<body>
+  <h2>Control Panel</h2>
+  <h5>- Solo Mining -</h5>
+  <div class="card">
+    <form id="workerForm" onsubmit="event.preventDefault(); updateData();">
+      <label class="label" for="workerInput">Worker address:</label>
+      <input type="text" id="workerInput" placeholder="bc1qz.." style="width:70%;padding:4px 8px;border-radius:6px;border:1px solid #00ff99;background:#181f1f;color:#00ff99;margin-bottom:8px;">
+    </form>
+    <p><span class="label">Worker:</span> <span id="worker">–</span></p>
+    <p><span class="label">Last Share:</span> <span id="lastshare">–</span></p>
+  </div>
+
+  <div class="card">
+    <details>
+      <summary>Hashrate</summary>
+      <p><span class="label">Hashrate (1m):</span> <span id="hashrate1m">–</span></p>
+      <p><span class="label">Hashrate (5m):</span> <span id="hashrate5m">–</span></p>
+      <p><span class="label">Hashrate (1h):</span> <span id="hashrate1hr">–</span></p>
+      <p><span class="label">Hashrate (1d):</span> <span id="hashrate1d">–</span></p>
+      <p><span class="label">Hashrate (7d):</span> <span id="hashrate7d">–</span></p>
+    </details>
+  </div>
+
+  <div class="card">
+    <details>
+      <summary>Shares</summary>
+      <p><span class="label">Accepted:</span> <span id="shares">–</span></p>
+      <p><span class="label">Best Share:</span> <span id="bestShare">–</span></p>
+      <p><span class="label">Best Ever:</span> <span id="bestEver">–</span></p>
+      <p><span class="label">Network Difficulty:</span> <span id="networkDiff">–</span></p>
+      <div class="bar-container">
+        <div class="bar red" id="progressBar"></div>
+      </div>
+      <p id="percent" style="text-align:center; font-weight:600; color:#00ff99; user-select:text;">Best Shot in percent: –</p>
+    </details>
+  </div>
+
+  <div class="card">
+    <details>
+      <summary>Odds of Finding a Block</summary>
+      <div id="oddsBlock" style="margin-top:16px">
+        <table>
+          <tr><td>1 Day:</td><td id="oddsDayPercent">&lt;0.001%</td><td id="oddsDayChance">&lt;1:1000</td></tr>
+          <tr><td>1 Week:</td><td id="oddsWeekPercent">&lt;0.001%</td><td id="oddsWeekChance">&lt;1:1000</td></tr>
+          <tr><td>1 Month:</td><td id="oddsMonthPercent">&lt;0.001%</td><td id="oddsMonthChance">&lt;1:1000</td></tr>
+          <tr><td>1 Year:</td><td id="oddsYearPercent">&lt;0.001%</td><td id="oddsYearChance">&lt;1:1000</td></tr>
+        </table>
+      </div>
+    </details>
+  </div>
+  <button id="updateBtn" style="margin-top:16px;">⟳ Update</button>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
