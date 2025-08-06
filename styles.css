@@ -1,6 +1,6 @@
 
     body {
-      background: linear-gradient(135deg, #121212, #1b1b1b);
+      background: #121212;
       color: #e0e0e0;
       font-family: 'Inter', Arial, sans-serif;
       padding: 20px;
@@ -23,7 +23,7 @@
       font-weight: 400;
       color: #00ff99;
       letter-spacing: 0.04em;
-      text-shadow: 0 0 2px #00ff99;
+     
     }
 
     h2 {
@@ -141,7 +141,6 @@
       color: #00ff99;
       font-weight: 700;
       font-size: 1.1rem;
-      text-shadow: 0 0 6px #00ff99;
       user-select: none;
       padding-left: 1.4em; 
       padding-bottom: 8px;
