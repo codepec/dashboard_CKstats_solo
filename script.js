@@ -13,6 +13,11 @@
     let cachedWorkerData = null;
     let cachedWorkerAddress = null;
 
+    // Bitcoin-Adresse validieren (Bech32 und Legacy)
+    function isValidBitcoinAddress(address) {
+      return /^(bc1q|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/i.test(address);
+    }
+
     async function getNetworkDiff() {
       const url = 'https://blockchain.info/q/getdifficulty?cors=true';
       const now = Date.now();
@@ -66,6 +71,32 @@
     async function updateData() {
       // Get worker address from input
       const workerAddress = document.getElementById("workerInput").value.trim();
+      // Validierung
+      if (!isValidBitcoinAddress(workerAddress)) {
+        document.getElementById("worker").textContent = "❌ Invalid Bitcoin address!";
+        document.getElementById("lastshare").textContent = "–";
+        document.getElementById("shares").textContent = "–";
+        document.getElementById("bestShare").textContent = "–";
+        document.getElementById("bestEver").textContent = "–";
+        document.getElementById("networkDiff").textContent = "–";
+        document.getElementById("hashrate1m").textContent = "–";
+        document.getElementById("hashrate5m").textContent = "–";
+        document.getElementById("hashrate1hr").textContent = "–";
+        document.getElementById("hashrate1d").textContent = "–";
+        document.getElementById("hashrate7d").textContent = "–";
+        document.getElementById("progressBar").style.width = "0%";
+        document.getElementById("percent").textContent = "Best Shot in percent: –";
+        document.getElementById("oddsDayPercent").textContent = "<0.001%";
+        document.getElementById("oddsDayChance").textContent = "<1:1000";
+        document.getElementById("oddsWeekPercent").textContent = "<0.001%";
+        document.getElementById("oddsWeekChance").textContent = "<1:1000";
+        document.getElementById("oddsMonthPercent").textContent = "<0.001%";
+        document.getElementById("oddsMonthChance").textContent = "<1:1000";
+        document.getElementById("oddsYearPercent").textContent = "<0.001%";
+        document.getElementById("oddsYearChance").textContent = "<1:1000";
+        return;
+      }
+
       localStorage.setItem("workerAddress", workerAddress);
 
       try {
