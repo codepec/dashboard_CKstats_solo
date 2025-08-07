@@ -13,22 +13,20 @@
   <meta name="apple-mobile-web-app-title" content="SoloMiner">
   <link rel="apple-touch-icon" href="ios/apple-touch-icon.png">
   <meta name="theme-color" content="#000000">
-
 </head>
+
 <body>
   <h2>Control Panel</h2>
   <h5>- Solo Mining -</h5>
+
   <div class="card">
-    <form id="workerForm" onsubmit="event.preventDefault(); updateData();">
-      <label class="label" for="workerInput">Worker address:</label>
-      <input type="text" id="workerInput" placeholder="bc1qz.." style="width:70%;padding:4px 8px;border-radius:6px;border:1px solid #00ff99;background:#181f1f;color:#00ff99;margin-bottom:8px;">
-    </form>
     <p><span class="label">Worker:</span> <span id="worker">–</span></p>
     <p><span class="label">Last Share:</span> <span id="lastshare">–</span></p>
+    <p><span class="label">Last Update:</span> <span id="lastupdate">–</span></p>
   </div>
 
   <div class="card">
-    <details>
+    <details class="details-hashrate">
       <summary>Hashrate</summary>
       <p><span class="label">Hashrate (1m):</span> <span id="hashrate1m">–</span></p>
       <p><span class="label">Hashrate (5m):</span> <span id="hashrate5m">–</span></p>
@@ -39,7 +37,7 @@
   </div>
 
   <div class="card">
-    <details>
+    <details class="details-shares">
       <summary>Shares</summary>
       <p><span class="label">Accepted:</span> <span id="shares">–</span></p>
       <p><span class="label">Best Share:</span> <span id="bestShare">–</span></p>
@@ -48,14 +46,14 @@
       <div class="bar-container">
         <div class="bar red" id="progressBar"></div>
       </div>
-      <p id="percent" style="text-align:center; font-weight:600; color:#00ff99; user-select:text;">Best Shot in percent: –</p>
+      <p id="percent" class="percent-text">Best Shot in percent: –</p>
     </details>
   </div>
 
   <div class="card">
-    <details>
+    <details class="details-odds">
       <summary>Odds of Finding a Block</summary>
-      <div id="oddsBlock" style="margin-top:16px">
+      <div class="odds-table">
         <table>
           <tr><td>1 Day:</td><td id="oddsDayPercent">&lt;0.001%</td><td id="oddsDayChance">&lt;1:1000</td></tr>
           <tr><td>1 Week:</td><td id="oddsWeekPercent">&lt;0.001%</td><td id="oddsWeekChance">&lt;1:1000</td></tr>
@@ -65,15 +63,38 @@
       </div>
     </details>
   </div>
-  <button id="updateBtn" style="margin-top:16px;">⟳ Update</button>
 
-  
+  <div class="card">
+    <details class="details-settings">
+      <summary>Settings</summary>
+
+      <div class="settings-container">
+
+        <label for="serverUrl" class="input-label">
+          Server URL:<br>
+          <select id="serverUrl" class="serverUrlStyle">
+            <option value="https://eusolo.ckpool.org/users/">https://eusolo.ckpool.org/users/</option>
+            <option value="https://solo.ckpool.org/users/">https://solo.ckpool.org/users/</option>
+            <option value="https://ausolo.ckpool.org/users/">https://ausolo.ckpool.org/users/</option>
+          </select>
+        </label>
+
+        <form id="BTCForm" onsubmit="event.preventDefault(); updateData();">
+          <label for="BTCAddressInput" class="input-label">
+            Worker Address:<br>
+            <input
+              class="inputBTCStyle"
+              type="text"
+              id="BTCAddressInput"
+              placeholder="Enter your BTC address - bc1qz.."
+            />
+          </label>
+        </form>
+
+      </div>
+    </details>
+  </div>
+
+  <button id="updateBtn" class="update-button">⟳ Update</button>
 </body>
 </html>
-
-
-
-
-
-
-

@@ -168,6 +168,53 @@
       display: none;
     }
 
+    .inputBTCStyle,
+    .serverUrlStyle {
+              display: block;
+              margin-top: 4px;
+              width: 100%;
+              max-width: 400px;
+              padding: 6px 10px;
+              border-radius: 6px;
+              border: 1px solid #00ff99;
+              background: #181f1f;
+              color: #00ff99;
+              font-family: monospace;
+    }
+    .inputBTCStyle:focus,
+    .serverUrlStyle:focus {   
+      outline: none;
+      border-color: #00ff99;
+      box-shadow: 0 0 8px rgba(0, 255, 153, 0.5);
+    }
+
+    .percent-text {
+      text-align: center;
+      font-weight: 600;
+      color: #00ff99;
+      user-select: text;
+    }
+
+    .settings-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px 0;
+    }
+
+    .input-label {
+      color: #ccc;
+      font-size: 0.95em;
+    }
+
+    .update-button {
+      margin-top: 16px;
+    }
+
+    .odds-table {
+      margin-top: 16px;
+    }
+
     /* Responsiveness */
     @media (max-width: 500px) {
       body {

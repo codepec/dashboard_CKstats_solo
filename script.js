@@ -1,17 +1,41 @@
 // script.js
     // Load worker address from localStorage if available
     window.addEventListener('DOMContentLoaded', () => {
-      const savedWorker = localStorage.getItem("workerAddress");
-      if (savedWorker) {
-        document.getElementById("workerInput").value = savedWorker;
-      }
+      const BTCAddressInput = document.getElementById("BTCAddressInput");
+      const serverSelect = document.getElementById("serverUrl");
+      const validPools = [
+        "https://eusolo.ckpool.org/users/",
+        "https://solo.ckpool.org/users/",
+        "https://ausolo.ckpool.org/users/"
+      ];
+
+      // Lokale Daten laden und setzen
+      const savedBTCAddress = localStorage.getItem("BTCAddressInput");
+      const savedServer = localStorage.getItem("serverUrl");
+
+      if (savedBTCAddress) BTCAddressInput.value = savedBTCAddress;
+      if (savedServer && validPools.includes(savedServer)) serverSelect.value = savedServer;
+
+      // Pool-Auswahl speichern
+      serverSelect.addEventListener("change", () => {
+        if (validPools.includes(serverSelect.value)) {
+          localStorage.setItem("serverUrl", serverSelect.value);
+        }
+      });
     });
+
 
     let lastNetworkDiffFetch = 0;
     let cachedNetworkDiff = null;
     let lastWorkerFetch = 0;
     let cachedWorkerData = null;
-    let cachedWorkerAddress = null;
+    let cachedBTCAddressInput = null;
+
+    const validPools = [
+      "https://eusolo.ckpool.org/users/",
+      "https://solo.ckpool.org/users/",
+      "https://ausolo.ckpool.org/users/"
+    ];
 
     // Bitcoin-Adresse validieren (Bech32 und Legacy)
     function isValidBitcoinAddress(address) {
@@ -38,17 +62,21 @@
       }
     }
 
-    async function getWorkerData(workerAddress) {
+    async function getWorkerData(BTCAddressInput) {
       const now = Date.now();
       // Only fetch if more than 60 seconds have passed and address is the same
       if (
         cachedWorkerData !== null &&
-        cachedWorkerAddress === workerAddress &&
+        cachedBTCAddressInput === BTCAddressInput &&
         (now - lastWorkerFetch) < 60000
       ) {
         return cachedWorkerData;
       }
-      const url = 'https://eusolo.ckpool.org/users/' + encodeURIComponent(workerAddress);
+      let serverUrl = localStorage.getItem("serverUrl");
+      if (!validPools.includes(serverUrl)) {
+        serverUrl = "https://eusolo.ckpool.org/users/";
+      }
+      const url = serverUrl + encodeURIComponent(BTCAddressInput);
       const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);
       try {
         const res = await fetch(proxyUrl);
@@ -58,7 +86,7 @@
         if (!jsonMatch) throw new Error('No JSON data found');
         const data = JSON.parse(jsonMatch[0]);
         cachedWorkerData = data;
-        cachedWorkerAddress = workerAddress;
+        cachedBTCAddressInput = BTCAddressInput;
         lastWorkerFetch = now;
         return data;
       } catch (err) {
@@ -69,10 +97,13 @@
 
     // Save worker address to localStorage on update
     async function updateData() {
+
+      const now = new Date().toLocaleString();
+      document.getElementById("lastupdate").textContent = now;
       // Get worker address from input
-      const workerAddress = document.getElementById("workerInput").value.trim();
+      const BTCAddressInput = document.getElementById("BTCAddressInput").value.trim();
       // Validierung
-      if (!isValidBitcoinAddress(workerAddress)) {
+      if (!isValidBitcoinAddress(BTCAddressInput)) {
         document.getElementById("worker").textContent = "❌ Invalid Bitcoin address!";
         document.getElementById("lastshare").textContent = "–";
         document.getElementById("shares").textContent = "–";
@@ -97,14 +128,14 @@
         return;
       }
 
-      localStorage.setItem("workerAddress", workerAddress);
+      localStorage.setItem("BTCAddressInput", BTCAddressInput);
 
       try {
         // Fetch network difficulty
         const networkDiff = await getNetworkDiff();
 
         // Fetch worker data (with rate limit)
-        const data = await getWorkerData(workerAddress);
+        const data = await getWorkerData(BTCAddressInput);
         if (!data) throw new Error('No JSON data found');
         const worker = data.worker[0];
 
@@ -165,12 +196,10 @@
         document.getElementById("oddsYearChance").textContent = yearOdds.oneInStr;
 
         // Open "Shares" and "Odds of Finding a Block" details after update
-        document.querySelectorAll('.card details').forEach(details => {
-          const summaryText = details.querySelector('summary')?.textContent?.toLowerCase();
-          if (summaryText && (summaryText.includes('shares') || summaryText.includes('odds'))) {
+        document.querySelectorAll('.details-odds, .details-shares')
+          .forEach(details => {
             details.open = true;
-          }
-        });
+          });
 
       } catch (err) {
         console.error("Error loading data:", err);
@@ -200,7 +229,7 @@
     }
 
     document.getElementById('updateBtn').onclick = updateData;
-    document.getElementById('workerInput').onkeydown = function(e) {
+    document.getElementById('BTCAddressInput').onkeydown = function(e) {
       if (e.key === 'Enter') {
         e.preventDefault();
         updateData();
