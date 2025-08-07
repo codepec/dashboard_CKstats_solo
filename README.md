@@ -1,11 +1,14 @@
 https://codepec.github.io/dashboard_CKstats_solo
 
 
-[https://solo.ckpool.org/](https://eusolo.ckpool.org/)
 
 # dashboard_CKstats_solo
 
 A simple, mobile-optimized **Progressive Web App (PWA)** dashboard for displaying CKstats data. Built with HTML, CSS, and JavaScript.
+
+Data is sourced from:  
+- [https://eusolo.ckpool.org/](https://eusolo.ckpool.org/)  
+- [https://blockchain.info/q/getdifficulty](https://blockchain.info/q/getdifficulty)
 
 ![App Icon](./windows11/LargeTile.scale-100.png)
 
@@ -13,8 +16,7 @@ A simple, mobile-optimized **Progressive Web App (PWA)** dashboard for displayin
 
 - 📱 Mobile-first responsive design  
 - ⚡ Installable as a PWA  
-- 📊 Data dashboard (CKstats-based)  
-- 💡 Works offline after first load  
+- 📊 Data dashboard (CKstats-based)
 
 ## 📦 Setup
 
